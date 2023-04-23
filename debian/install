@@ -1,0 +1,4 @@
+debian/60imwheel_start-imwheel etc/X11/Xsession.d
+debian/61imwheel_load-xmodmap  usr/share/doc/imwheel/examples
+debian/startup.conf            etc/X11/imwheel
+imwheelrc                      etc/X11/imwheel

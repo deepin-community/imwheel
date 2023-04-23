@@ -1,0 +1,120 @@
+Description: fix some spelling errors in final binary and in manpage
+Author: Joao Eriberto Mota Filho <eriberto@debian.org>
+Last-Update: 2022-02-05
+Index: imwheel/imwheel.1
+===================================================================
+--- imwheel.orig/imwheel.1
++++ imwheel/imwheel.1
+@@ -70,12 +70,12 @@ See also xmodmap(1).
+ .RE
+ .TP
+ \fB-c, --config\fP
+-Popup to configuration helper window imediately.
++Popup to configuration helper window immediately.
+ .br
+ See also \fBCONFIGURATION HELPER\fP
+ .TP
+ \fB-D, --debug\fP
+-Show all possible debug info while running.  This spits out alot and I also 
++Show all possible debug info while running.  This spits out a lot and I also 
+ suggest using the \fB-d\fP option to prevent imwheel from detaching from the 
+ controlling terminal.
+ .TP
+@@ -86,7 +86,7 @@ controlling terminal (no daemon). Contro
+ \fB-f, --focus\fP
+ Forces the X event subwindow to be used instead of the original hack that would 
+ replace the subwindow in the X event with a probed focus query (XGetInputFocus).
+-This should fix some compatability problems with some window managers, such as
++This should fix some compatibility problems with some window managers, such as
+ window maker, and perhaps enlightenment. If nothing seems to be working right,
+ try toggling this on or off...
+ .TP
+@@ -100,7 +100,7 @@ Short help on options plus version/autho
+ \fB-k, --kill\fP
+ Attempts to kill old imwheel.
+ Process IDs are tested using /proc/${pid}/status Name: field ?= imwheel. 
+-If /proc is not mounted then this fails everytime!
++If /proc is not mounted then this fails every time!
+ Otherwise, this ensures that the wrong process is not killed.
+ .TP
+ \fB-q, --quit\fP
+@@ -188,7 +188,7 @@ another window section or the end of the
+ .LP
+ .SH "IMWHEELRC TRANSLATION DEFINITIONS"
+ Mouse wheel/button translations each take up a line after a window section has
+-been started.  Each argument is seperated by commas(,); whitespace is ignored.
++been started.  Each argument is separated by commas(,); whitespace is ignored.
+ KeySyms are used to specify the keyboard input and outputs.  Pipes (|) are used
+ to join multiple keys into one input/output.
+ The format is as follows...
+@@ -257,7 +257,7 @@ Default is 0.
+ Commands start with the `@' character.  Commands are as follows:
+ .TP
+ \fB@Exclude\fP
+-Exclude this window from imwheel grabing mouse events.  IMWheel will ungrab
++Exclude this window from imwheel grabbing mouse events.  IMWheel will ungrab
+ the mouse when these windows are entered and not regrab the mouse until focus
+ is changed to a non-excluded window.  This allows the ZAxis button events to
+ pass through normally and mouse grabs to succeed.
+@@ -268,7 +268,7 @@ Higher \fIpriority\fP values take preced
+ Equal priorities on sections make the imwheelrc file parsed from top to bottom
+ to find the first match.
+ Thus \fB@Priority\fP can be used to make the file search for matches out of order,
+-then you dont have to keep the entries in order if you so please.
++then you don't have to keep the entries in order if you so please.
+ The supplied imwheelrc file contains extensive comments and examples of the
+ \fB@Priority\fP function.
+ .br
+@@ -365,7 +365,7 @@ wheel you may want to activate the Emula
+ And don't forget to reduce the Buttons argument to 2!
+ .LP
+ .SH "LEFTY BUTTON MAPPING IN X WINDOWS"
+-For those lefties out there, this command may help you get the buttons set up correctly in XWindows for both
++For those lefties out there, this command may help you get the buttons set up correctly in X for both
+ left handed and imwheel use.
+ .LP
+ .RS
+@@ -393,7 +393,7 @@ Stick mice are still a pain in the butt
+ Or X Windows' fault, for not having a method to easily use such devices in all applications.
+ .LP
+ Keyboard focus isn't changed automatically to input keys into Window mouse is
+-over.  This only occurs with Click-to-Focus type focus managment in window managers.
++over.  This only occurs with Click-to-Focus type focus management in window managers.
+ I use sloppy focus in fvwm2, which always works for me. - Whose fault \fIis\fP this?
+ (Switch focus modes and/or window managers, or try the \fB-f\fP option on imwheel)
+ .LP
+@@ -420,7 +420,7 @@ $HOME/.imwheelrc
+ 
+ /etc/X11/imwheel/imwheelrc
+ 	The global location for the configuration
+-	file. Overidden by the user's configuration file.
++	file. Overridden by the user's configuration file.
+ .fi
+ 
+ .LP
+Index: imwheel/imwheel.c
+===================================================================
+--- imwheel.orig/imwheel.c
++++ imwheel/imwheel.c
+@@ -66,7 +66,7 @@ const char *optionusage[][2]=
+ { /*{argument name,		usage}*/
+ 	{"delay-rate",		"auto repeat until button release (default=250)"},			//a
+ 	{"grab-buttons",	"Specify button remappings (default=\"4 5 6 7 8 9\", 0=skip)"},//b
+-	{NULL,				"Open configuration helper window imediately"},				//c
++	{NULL,				"Open configuration helper window immediately"},				//c
+ 	{NULL,				"Spit out all debugging info (it's a lot!)"},				//D
+ 	{NULL,				"IMWHeel process doesn't detach from terminal"},			//d
+ 	{"display-name",		"Sets X display to use"},		//X
+Index: imwheel/jax/jax.c
+===================================================================
+--- imwheel.orig/jax/jax.c
++++ imwheel/jax/jax.c
+@@ -268,7 +268,7 @@ int JAXmapWin(Jax *jax, int raised)
+ 	XFlush(jax->d);
+ 
+ 	if(!JAXgetxwa(jax))
+-		fprintf(stderr,"Error getting window atributes!\n");
++		fprintf(stderr,"Error getting window attributes!\n");
+ 	
+ 	return(1);
+ }

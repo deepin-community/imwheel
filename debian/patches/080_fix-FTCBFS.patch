@@ -1,0 +1,22 @@
+Description: fix a FTCBFS
+   imwheel fails to cross build from source, because upstream's
+   configure.in uses AC_CHECK_FILE to check for source files. The
+   AC_CHECK_FILE macro is only meant for checking files on the host system
+   while it is clearly being used to check for a build system file here.
+   Use "test -e" here.
+Author: Helmut Grohne <helmut@subdivi.de>
+Bug-Debian: https://bugs.debian.org/901986
+Last-Update: 2018-06-21
+Index: imwheel/configure.in
+===================================================================
+--- imwheel.orig/configure.in
++++ imwheel/configure.in
+@@ -211,7 +211,7 @@ dnl Check for gpm-imwheel source.
+ NO_GPM_DOC=
+ GPM_DIR="gpm-1.19.3"
+ AC_SUBST(GPM_DIR)
+-AC_CHECK_FILE($GPM_DIR/gpm.c,HAVE_GPM_SRC=yes,HAVE_GPM_SRC=no)
++AS_IF([test -e "$GPM_DIR/gpm.c"],[HAVE_GPM_SRC=yes],[HAVE_GPM_SRC=no])
+ AC_SUBST(HAVE_GPM_SRC)
+ AC_MSG_CHECKING(if we build gpm-imwheel)
+ gpm_enabled=no

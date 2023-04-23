@@ -1,0 +1,9 @@
+010_manpage-update.patch
+020_changelog-format.patch
+030_imwheelrc-update.patch
+040_prune-deps.patch
+050_makefile-update.patch
+060_support-more-buttons.patch
+070_fix-spelling-errors.patch
+080_fix-FTCBFS.patch
+090_fix-focus-out.patch
