@@ -1,5 +1,387 @@
-template-repository (1.0-1) unstable; urgency=medium
+imwheel (1.0.0pre12-deepin3) unstable; urgency=medium
 
-  * Initial release
+  * update changelog
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- xiangzelong <xiangzelong@deepin.org>  Sun, 23 Apr 2023 17:49:40 +0800
+
+imwheel (1.0.0pre12-15) unstable; urgency=medium
+
+  * debian/control: Updated maintainer (Closes: #766979)
+  * debian/patches/090_fix-focus-out.patch (Closes: #260091)
+  * debian/copyright: Added to debian copyright list
+  * Fix day-of-week for changelog entry 1.0.0pre1-2
+
+ -- Jack Toh <tohc88@outlook.com>  Wed, 11 May 2022 21:29:32 +0800
+
+imwheel (1.0.0pre12-14) unstable; urgency=medium
+
+  * QA upload.
+  * debian/control: added word 'mouse' to description.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 05 Feb 2022 01:11:23 -0300
+
+imwheel (1.0.0pre12-13) unstable; urgency=medium
+
+  * QA upload.
+  * Migrations:
+      - debian/copyright to 1.0 format.
+      - debian/rules to new (reduced) format.
+  * Using new DH level format. Consequently:
+      - debian/compat: removed.
+      - debian/control: changed from 'debhelper' to 'debhelper-compat' in
+        Build-Depends field and bumped level to 13.
+  * debian/clean: created to remove a file generated from the build process and
+    forgotten by distclean.
+  * debian/control:
+      - Added 'Rules-Requires-Root: no' to source stanza.
+      - Added Vcs-* fields.
+      - Bumped Standards-Version to 4.6.0.
+      - Removed no longer needed build dependencies dpkg-dev and quilt.
+  * debian/imwheel.install: renamed to install.
+  * debian/imwheel.prerm:
+      - Renamed to prerm.
+      - Explicitly add 'set -e'.
+  * debian/NEWS: removed all asterisks, as asked by lintian.
+  * debian/patches/:
+      - Added a numeric prefix to all patch names.
+      - build-system-update: dropped. This patch was created in 2010 (revision
+        1.0.0pre12-9) to update the autotools files. However, currently, the
+        dh_autoreconf do it automatically. Also, this patch will generate a
+        FTBFS with DH 13.
+      - 070_fix-spelling-errors.patch: created to fix some spelling errors in
+        final binary and in manpage.
+      - 080_fix-FTCBFS.patch: created to fix a FTCBFS because upstream's
+        configure.in uses AC_CHECK_FILE to check for source files. Thanks to
+        Helmut Grohne <helmut@subdivi.de>. (Closes: #901986)
+  * debian/salsa-ci.yml: added to provide CI tests for Salsa.
+  * debian/tests/control: created to provide a superficial CI test.
+  * debian/upstream/metadata: created.
+  * debian/watch: created.
+
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Fri, 04 Feb 2022 17:27:20 -0300
+
+imwheel (1.0.0pre12-12) unstable; urgency=low
+
+  * Orphaning the package.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Sun, 26 Oct 2014 15:53:50 -0400
+
+imwheel (1.0.0pre12-11) unstable; urgency=low
+
+  * Revert mistaken punctuation changes in the last upload made to
+    /etc/X11/Xsession.d/60imwheel_start-imwheel and
+    /etc/X11/imwheel/startup.conf (except that 60imwheel_start-imwheel
+    will still kill already-running instances of imwheel by default
+    when launching). (Closes: #763850)
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Fri, 03 Oct 2014 09:20:30 -0400
+
+imwheel (1.0.0pre12-10) unstable; urgency=low
+
+  * Remove needless quotes around variables in
+    /etc/X11/Xsession.d/60imwheel_start-imwheel and in
+    /etc/X11/imwheel/startup.conf. If imwheel stops working after
+    upgrading, check startup.conf and remove/adjust extra punctuation.
+  * Tweak 60imwheel_start-imwheel so that imwheel kills
+    already-running instances of itself by default when it launches.
+  * Bump standards-version to 3.9.6, and debhelper compatibility level to 9.
+    Adjust the build-deps accordingly.
+  * Re-jig debian/rules to enable hardening compile flags, and also clean-up
+    the same file to address minor lintian warnings.
+  * Don't install long-irrelevant 'extra' binaries in /usr/lib/imwheel
+    (e.g. mdump). (Closes: #716176)
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Sun, 21 Sep 2014 09:48:27 -0400
+
+imwheel (1.0.0pre12-9) unstable; urgency=low
+
+  * Bump standards-version to 3.8.4, and debhelper compatibility level to 7.
+  * Switch to dpkg-source 3.0 (quilt) format. Add quilt to build-deps, and
+    convert patches to the quilt system, documenting them as per DEP 3.
+    Tweak debian/rules to handle quilt patching/unpatching as well.
+  * Add (misc:Depends} to debian/control.
+  * Drop 12 year old EMACS setup commentary from /usr/share/docs/imwheel.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Sat, 20 Feb 2010 09:19:53 -0500
+
+imwheel (1.0.0pre12-8) unstable; urgency=low
+
+  * Update standards-version to 3.7.3, and debhelper compatibility level
+    to 6. No changes.
+  * Move Homepage from the package description to a regular
+    debian/control field.
+  * Don't ignore distclean errors in debian/rules.
+  * Don't ship the BUGS file, as it's out of date. Also drop the README,
+    as the manpage is more current and has all of the same information.
+
+  * Change the default button spec for clarity. Since X now considers
+    everyone to have a horizontal mouse wheel when numbering buttons, we now
+    skip over four buttons before we get to the thumb buttons. Update the
+    README.Debian to match, and add a NEWS.Debian entry to explain.
+  * Revamp the default imwheelrc and manpage, mainly cleaning up and deleting
+    references to deprecated options. Also edit these options out of the
+    ouput of 'imwheel -h'.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Mon, 28 Jan 2008 19:26:41 -0500
+
+imwheel (1.0.0pre12-7) unstable; urgency=low
+
+  * Improve the last patch slightly, by once again allowing imwheel to be
+    started without the '-b' option. Many people don't use this option
+    since they are happy with the default ("4 5 6 7 8 9"), and therefore the
+    last upload caused imwheel to fail to start for them. Now the old
+    behaviour is restored, though if you do use the '-b' option, you
+    still need to add the spaces between the numbers. (Closes: #359685)
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Tue, 28 Mar 2006 10:41:24 -0500
+
+imwheel (1.0.0pre12-6) unstable; urgency=low
+
+  * Apply a patch from Thomas Liebetraut <thomas@tommie-lie.de> that
+    allows imwheel to control more than 9 buttons. This requires that
+    the button spec format be changed, however. Each button number must
+    now be separated by a space (so "0089" becomes "0 0 8 9"). Update
+    the documentation to reflect this change. Add a NEWS.Debian to
+    explain the changes in more detail. (Closes: #203006)
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Thu, 23 Mar 2006 21:11:37 -0500
+
+imwheel (1.0.0pre12-5) unstable; urgency=low
+
+  * Tweak the build system so that imwheel doesn't depend on libraries
+    that it doesn't actually need. Also remove the xutils build-depend,
+    which seems to be unnecessary.
+  * Adjust the startup.conf imwheel defaults, to better match the most
+    common case when using the new X.Org 6.9 or later.
+  * Revamp the README.Debian so that users confused by imwheel breaking
+    with X.Org 6.9 have sufficient information on the changes to be able
+    to adapt and get imwheel working again.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Sat,  7 Jan 2006 11:55:09 -0500
+
+imwheel (1.0.0pre12-4) unstable; urgency=low
+
+  * Update my e-mail address.
+  * Bump DH_COMPAT to 5. No changes required.
+  * Remove maintainer scripts that handled old pre-Sarge upgrade issues.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Sun, 27 Nov 2005 12:30:48 -0500
+
+imwheel (1.0.0pre12-3) unstable; urgency=low
+
+  * Add a prerm script that stops running imwheel processes. (Closes: #321924)
+  * Grab minor fixes from CVS.
+  * Split xlibs-dev build-dependency into parts.
+  * Fix debian/copyright GPL address: point to GPL-2, not the symlink
+    to the latest GPL version.
+  * Minor packaging updates and cleanups to debian/rules.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Wed, 17 Aug 2005 15:35:42 -0400
+
+imwheel (1.0.0pre12-2) unstable; urgency=high
+
+  * New upload to force mips to try again; pre12-1 was never installed.
+    Still urgency=high since pre12-1 never made Sarge.
+  * Improved the readability of the upstream changelog.
+  * Minor compilation fixes.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Wed, 29 Sep 2004 10:02:49 -0400
+
+imwheel (1.0.0pre12-1) unstable; urgency=high
+
+  * New upstream release.
+    + Re-implements the -k switch in a secure manner.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Wed,  1 Sep 2004 15:12:44 -0400
+
+imwheel (1.0.0pre11-2) unstable; urgency=high
+
+  * Disabled functionality that allowed a nasty local exploit. Urgency=high
+    so that this change makes Sarge. (Closes: #267829)
+  * Xsession.d xmodmap startup script moved to the "examples" documentation
+    subdirectory.
+  * Updated the changelog using DEVELOPMENT.TXT on the upstream homepage.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Wed, 25 Aug 2004 20:29:50 -0400
+
+imwheel (1.0.0pre11-1) unstable; urgency=low
+
+  * New upstream release.
+    + Fixed infinite loop problem, triggered by Enlightenment under certain
+      circumstances.
+    + Modified gpm no longer included, but it wasn't built anyway.
+  * Slight change to the suggested (commented out) imwheel parameters in
+    startup.conf (-b "0067" instead of -b "67"), which should make the button
+    names in imwheelrc correspond to their purposes more often.
+  * Xsession.d imwheel startup script now properly named.
+  * Added an Xsession.d xmodmap script (not installed by default), to ease its
+    setup, based on the example in the Xsession manpage.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Tue,  8 Jun 2004 11:15:16 -0400
+
+imwheel (1.0.0pre10-1) unstable; urgency=medium
+
+  * New maintainer. (Closes: #249533)
+  * New upstream release:
+    + No longer segfaults when using "(null)". (Closes: #232353)
+    + Patch to prevent "no ~/.imwheelrc" warning no longer required.
+    + Fixes the reporting of window classes from GTK2 apps. This may
+      require some users to reconfigure, since apps which had
+      worked with "(null)" now need their specific window class.
+  * Incorporates FTBFS-fixing patch. Thanks to Sebastian Muszynski.
+    (Closes: #229409)
+  * Scripts to run IMWheel with X automatically are now in place but disabled
+    by default.
+  * Many other minor packaging changes and updates.
+  * Bump Standards-Version to 3.6.1.0.
+
+ -- Christopher Martin <chrsmrtn@freeshell.org>  Mon, 31 May 2004 20:44:25 -0400
+
+imwheel (1.0.0pre5-2) unstable; urgency=low
+
+  * No complaining if ~/.imwheelrc is not found (Closes: #116055)
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Mon,  5 Jan 2004 13:13:35 +0100
+
+imwheel (1.0.0pre5-1) unstable; urgency=low
+
+  * New upstream release.
+  * This is the "I swear I will close the stale bugs". To $DEITY.
+  * Upstream added autorepeat patch from Darren Salt
+    <linux@youmustbejoking.demon.co.uk> (Closes: #173964)
+  * Improved? Build-Depends.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Mon,  5 Jan 2004 12:37:27 +0100
+
+imwheel (1.0.0pre3-4) unstable; urgency=low
+
+  * The "I'm in such a hurry" release!
+    Fix some stupid typo. Thanks to J G Miller <miller@yoyo.ORG> for his
+    patience and reporting it (too).
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Mon, 31 Mar 2003 22:19:15 +0200
+
+imwheel (1.0.0pre3-3) unstable; urgency=low
+
+  * Fix setup-conf so that gpm works the True Debian Way (tm). I mean, no
+    patched gpm daemon et all.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Fri, 28 Mar 2003 20:51:44 +0100
+
+imwheel (1.0.0pre3-2) unstable; urgency=low
+
+  * Change section to utils (Closes: #145118)
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Wed, 26 Mar 2003 21:41:04 +0100
+
+imwheel (1.0.0pre3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Gcc recompile. Standards Version upgraded.
+  * Honored Developer's Reference 6.3.2: "Upstream home page" and "Author".
+  * Resized and "normalized" icon and improved the Description: field to fix
+    lintian errors.
+  * Updated config.* the lazy way. Bigger diff. Less fuss: Added Build-Depends
+    on automake for the updated "missing" file and autotools-dev for the
+    updated config.* files.
+  * Changed the Section: field to utils. Will close bug soon.
+  * Fixed upstream email address all around.
+  * Improved dirs, docs and copyright file.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Sat, 25 Jan 2003 07:36:23 +0100
+
+imwheel (1.0.0pre1-3) unstable; urgency=low
+
+  * Change README.Debian to reflect new location of docs: /usr/share/doc/.
+    Thanks to David Martinez CSIC RedIRIS <david.martinez@rediris.es> for
+    pointing it out.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Sun, 13 Oct 2002 16:51:47 +0200
+
+imwheel (1.0.0pre1-2) unstable; urgency=low
+
+  * Updated upstreams contact info, url and email.
+  * No answer from submitter (Closes: #63722).
+  * Updated Standards version, and required debhelper version.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Sun, 14 Jan 2001 10:33:12 +0100
+
+imwheel (1.0.0pre1-1) unstable; urgency=low
+
+  * New maintainer (Closes: #123517).
+  * Implemented debug in DEB_BUILD_OPTIONS.
+  * Upgraded Standards-Version: to  3.5.6.0 and DH_COMPAT to 3.
+  * Added more useful docs (Closes: #81458).
+  * Some packages handle wheelmice on their own:
+    - Excluded Mozilla (Closes: #69744).
+    - Excluded Galeon  (Closes: #117722).
+    - Commented out emacs (Closes: #116702).
+  * Fixed manpage to reflect correct conffile location (Closes: #122516).
+  * Will not build the patched gpm daemon or remove its existence from the
+    docs. See README.Debian (Closes: #60224, #58481).
+  * Removed conffiles, no longer needed.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Fri, 21 Dec 2001 10:33:12 +0100
+
+imwheel (0.9.9pre5-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * debian/rules: Pass --prefix to configure to avoid it installing into
+    /usr/local if imwheel isn't on the build system (closes: #104307).
+  * debian/rules: Also use --mandir to force /usr/share/man, and remove
+    redundant call to dh_installmanpages (closes: #91178).
+  * debian/control: Add build-dependencies. Policy version 3.1.1.
+  * debian/copyright: Update GPL pointer.
+
+ -- Colin Watson <cjwatson@debian.org>  Fri,  9 Nov 2001 21:29:58 +0000
+
+imwheel (0.9.9pre5-2) unstable; urgency=low
+
+  * Added rm -f mdetect/mdetect to build process; otherwise, the supplied
+    binary wasn't rebuilt, causing problems building the package on
+    architectures other than i386. Closes: #71443.
+    Also added the mdetect/mice directory to /usr/lib/imwheel.
+
+ -- Tom Lees <tom@debian.org>  Tue, 12 Sep 2000 22:46:35 +0100
+
+imwheel (0.9.9pre5-1) unstable; urgency=low
+
+  * New upstream release (Closes: #36828, #62346). No really major changes,
+    except a security fix (buffer overflow exploit), which didn't affect us
+    too badly because we never had imwheel setuid anyway.
+  * The security exploit mentioned above was fixed in an NMU by
+    Wichert Akkerman <wichert@soil.nl>; this is the next official release, so
+    Closes: #63720.
+  * Added some more stuff to the default imwheelrc:
+    - support for gnome-terminal (thanks to danny <danny@spesh.com>,
+      Closes: #68683).
+
+ -- Tom Lees <tom@debian.org>  Mon, 28 Aug 2000 20:05:22 +0100
+
+imwheel (0.9.6-2) unstable; urgency=low
+
+  * Changed maintainer address to use my @debian.org address.
+  * Fixed address of imwheel homepage in copyright file.
+  * Removed debian/imwheel.1, since upstream now has a manpage.
+  * Fixed doc dirs. Now lintian clean.
+
+ -- Tom Lees <tom@debian.org>  Sat, 30 Oct 1999 14:54:47 +0100
+
+imwheel (0.9.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Tom Lees <tom@lpsg.demon.co.uk>  Wed, 25 Aug 1999 12:52:24 +0100
+
+imwheel (0.9.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * First version uploaded to debian.
+
+ -- Tom Lees <tom@lpsg.demon.co.uk>  Sun, 10 Jan 1999 22:14:11 +0000
+
+imwheel (0.9-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Tom Lees <tom@lpsg.demon.co.uk>  Thu, 26 Nov 1998 10:32:45 +0000

@@ -1,0 +1,19 @@
+Description: imwheel ignores FocusOut events, fix that
+ imwheel's @Exclude doesn't work, because it doesn't handle FocusOut 
+ events properly (explicitly ignoring them). As a result, using 
+ the @Exclude command always causes imwheel to break upon entering
+ an excluded window. This patch fixes this.
+ 
+ Author: Milko Krachounov <milko@3mhz.net>
+
+--- a/imwheel.c
++++ b/imwheel.c
+@@ -343,7 +343,7 @@
+ 	else
+ 	{
+ 		e->xbutton.button=button=0;
+-		e->type=None;
++		//e->type=None;
+ 	}
+ 	if(handleFocusGrab && e->type==FocusOut && (!useFifo && !grabbed))
+ 	{

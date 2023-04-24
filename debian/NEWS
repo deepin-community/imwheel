@@ -1,0 +1,35 @@
+imwheel (1.0.0pre12-8) unstable; urgency=low
+
+    This upload changes the default IMwheel button-spec (the '-b' option) in
+    /etc/X11/imwheel/startup.conf. This was done to make IMWheel's default
+    configuration logically match the latest X.Org mouse button numbering
+    scheme. If IMWheel is configured to your liking, there is no need to let
+    dpkg overwrite your files. If you do proceed with the overwrite, then you
+    may want to read the revamped README.Debian to understand how everything
+    works.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Mon, 28 Jan 2008 19:26:41 -0500
+
+imwheel (1.0.0pre12-7) unstable; urgency=low
+
+    This upload introduces a patch which allows imwheel to use more than 9
+    mouse buttons. The new buttons higher are named ExtBt7, ExtBt8, etc.,
+    and can be assigned functions in your imwheelrc file accordingly.
+    The old sequence was: Up, Down, Left, Right, Thumb1, Thumb2. Now it is
+    Up, Down, Left, Right, Thumb1, Thumb2, ExtBt7, ExtBt8, etc. See the
+    updated imwheel manpage for details.
+
+    An important change to note is that the format of the button spec
+    command line argument for imwheel has changed. Before, imwheel was
+    started with an option like -b "0089". Now you must place spaces
+    between the button numbers, like this: -b "0 0 8 9". This allows
+    users to tell imwheel to control buttons with numbers higher than 9.
+
+    To accommodate these changes, the default
+    /etc/X11/Xsession.d/60imwheel_start-imwheel and
+    /etc/X11/imwheel/startup.conf files shipped with the imwheel package
+    have changed. Accepting the new versions of these files (if you are
+    prompted to choose), then reconfiguring your startup.conf, is the
+    safest way to ensure a smooth upgrade.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Tue, 28 Mar 2006 10:41:24 -0500

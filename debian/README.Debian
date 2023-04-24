@@ -1,0 +1,143 @@
+Debian IMWheel Notes
+--------------------
+
+* Need the full documentation? Read the manpage ("man imwheel").
+
+* Starting IMWheel:
+
+  - IMWheel can be started from ~/.xsession, or by using your desktop
+    environment's particular startup script system. If you wish to run IMWheel
+    with all X sessions, edit /etc/X11/imwheel/startup.conf.
+
+  - How IMWheel is started has no bearing on which configuration file it uses
+    to obtain settings. IMWheel always checks for ~/.imwheelrc first, then
+    falls back to /etc/X11/imwheel/imwheelrc.
+
+* Configuring X.Org:
+
+  - Since the mouse wheel is now generally well supported in Debian, most users
+    of IMWheel likely wish to make use of the side or thumb buttons of their
+    mouse. With a typical Microsoft Intellimouse, configuring IMWheel is fairly
+    easy. Ensure that the following is present in the section of the X config
+    file (usually /etc/X11/xorg.conf) dealing with your mouse:
+
+      Option      "Protocol" "ExplorerPS/2"
+
+    As of X.Org 6.9, the mouse wheel has buttons 4 and 5 reserved for it by
+    default. The horizontal mouse wheel axis, available on some mice, is set to
+    buttons 6 and 7. By default, these four buttons are set aside for the mouse
+    wheel, regardless of the particular mouse's actual capabilities. This
+    ensures consistent numbering of the side or thumb buttons and other
+    non-standard buttons, since the thumb buttons are always assigned logical
+    button numbers starting with 8.
+
+    Due to these new defaults, some common X config file settings are now often
+    superfluous and can interfere with IMWheel by overriding the defaults and
+    affecting which buttons are exposed, along with their numbering:
+
+      Option      "ZAxisMapping" "..."
+      Option      "Buttons" "..."
+
+    Many users can therefore comment out these lines. After restarting X,
+    IMWheel might start to behave more sensibly.
+
+* Configuring IMWheel:
+
+  - The above might seem confusing, but here is how it all works. IMWheel's
+    default button-spec (the '-b' option, if not provided by the user) is to
+    grab and make use of your mouse's buttons starting with 4 and stopping at
+    9, meaning the vertical mouse wheel axis (4 and 5), the horizontal mouse
+    wheel axis (6 and 7) even if you don't have one, and then the thumb
+    buttons, left and right (8 and 9), in other words, '-b "4 5 6 7 8 9"'. You
+    can go higher than 9 if the buttons exist on your mouse, but you'll have to
+    add them to your button-spec manually. In the IMWheel configuration file,
+    you can then assign actions to each button:
+
+    Button/Action     Logical Button   Name in imwheelrc
+    Wheel Up          4                Up
+    Wheel Down        5                Down
+    Wheel Left        6                Left
+    Wheel Right       7                Right
+    Thumb Button 1    8                Thumb1
+    Thumb Button 2    9                Thumb2
+    Extra Button 1    10               ExtBt7
+    Extra Button 2    11               ExtBt8
+    etc.
+ 
+    If you don't want to grab any of these buttons, replace the relevant
+    number(s) with zeroes, and IMWheel skips over them, passing their clicks
+    through to applications normally. If, say, you wish to grab only the thumb
+    buttons, then use a button-spec of '-b "0 0 0 0 8 9"', and edit the IMWheel
+    configuration file so that all desired actions are assigned to Thumb1 and
+    Thumb2. Note that you can grab buttons, but then in your imwheelrc tell
+    IMWheel to pass their clicks through to certain applications which might
+    support those buttons natively, thus gaining control and flexibility.
+
+  - Strange things happen if you get the button-spec wrong. If you don't want
+    to grab the mouse wheel on a mouse with a one-axis wheel, but forget the
+    zeroes ('-b "8 9"'), then you'll actually be grabbing the mouse wheel, and
+    clicking the thumb buttons activates the wheel. If you forget only two of
+    the zeroes on a mouse with only a one-axis mouse wheel ('-b "0 0 8 9"'),
+    IMWheel will grab the thumb buttons, but will label them Left and Right,
+    and any actions you had configured for the thumb buttons will be ignored,
+    while anything setup for the horizontal wheel axis will be triggered by the
+    thumb buttons! If this sounds like what you're experiencing, review your
+    button-spec.
+
+  - Having configured X, try running 'imwheel'. If you wish to use the thumb
+    buttons, add the '-b "0 0 0 0 8 9"' option, and only the 8th and 9th
+    logical buttons (Thumb1 and Thumb2) will be handled by IMWheel. To recap,
+    the zeroes tell IMWheel to skip over buttons which exist on the mouse (or
+    at least are mapped to logical buttons by X), but which it shouldn't
+    interfere with, such as the mouse wheel. (Of course, IMWheel can capture
+    and use the mouse wheel if you wish.)
+
+    These instructions illustrate basic IMWheel configuration on fairly
+    standard hardware. Owners of unconventional hardware will have to adapt
+    them to suit their particular mice.
+
+  - Of course, you must also tell IMWheel specifically what to do with the
+    buttons that you told it to capture. If the default imwheel mappings
+    are unsatisfactory, you can create a local ~/.imwheelrc file or modify the
+    global fallback, /etc/X11/imwheel/imwheelrc. Further information is
+    available in the manpage ("man imwheel"). Once you have created or
+    modified your imwheelrc, be sure to restart IMWheel if it is already
+    running. (The '-k' option is useful for killing current imwheel processes
+    while starting a fresh one. Don't forget your button-spec and other
+    options, as necessary.)
+
+* Remapping mouse buttons:
+
+  - If you wish to re-arrange any of the buttons on your mouse, the best method
+    is to the add an option, new to X.Org 6.9, to your mouse's section of the X
+    configuration file (usually /etc/X11/xorg.conf):
+
+      Option "ButtonMapping" "1 2 3 8 9"
+
+    The above line matches the default, and therefore won't actually change
+    anything, but it helps to illustrate X's internal logic. As explained
+    above, the fourth and fifth physical buttons are assigned logical button
+    numbers 8 and 9, leaving 4 to 7 for the mouse wheel's two possible axes.
+    Further buttons get higher numbers. As needed, adjust your button mapping
+    by rearranging the logical button numbers. For more information, see
+    "man mousedrv".
+
+  - Another possible solution is xmodmap, part of the x11-xserver-utils
+    package. The IMWheel package includes the example script
+    61imwheel_load-xmodmap in its documentation, which can be copied into
+    /etc/X11/Xsession.d to have xmodmap check for two possible configuration
+    files when X loads, and use them if they exist. After putting the script
+    in place, you must create a global xmodmap configuration file, such as
+    /etc/X11/Xmodmap, and/or a local one, ~/.Xmodmap. See the xmodmap manpage
+    for information on how to write these configuration files, which, for your
+    information, can also be used to remap your keyboard. However, to simply
+    rearrange mouse buttons, enter something like this in your xmodmap
+    configuration file:
+
+      pointer = 1 2 3 7 5 6 4
+
+    This line, for example, will flip the 4th and the 7th mouse buttons. It
+    also assumes that your mouse has exactly seven buttons, so be sure to
+    adjust the above to match your wishes and hardware.
+
+ -- Christopher Martin <chrsmrtn@debian.org>  Thu, 11 Sep 2014 10:29:33 -0400
