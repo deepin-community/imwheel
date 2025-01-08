@@ -1,3 +1,9 @@
+imwheel (1.0.0pre12-deepin4) unstable; urgency=medium
+
+  * Move to main.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Wed, 08 Jan 2025 14:17:55 +0800
+
 imwheel (1.0.0pre12-deepin3) unstable; urgency=medium
 
   * update changelog
